@@ -12,5 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class UserAccountManagementController {
 
+    @GetMapping
+    public String userAccounts(
+            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model
+    ) {
+        return "management/userAccounts";
+    }
 
 }
