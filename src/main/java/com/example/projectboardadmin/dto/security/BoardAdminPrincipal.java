@@ -1,10 +1,8 @@
 package com.example.projectboardadmin.dto.security;
 
 
-
 import com.example.projectboardadmin.domain.constant.RoleType;
-import com.example.projectboardadmin.dto.UserAccountDto;
-import lombok.Getter;
+import com.example.projectboardadmin.dto.AdminAccountDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,15 +23,11 @@ public record BoardAdminPrincipal(
         Map<String, Object> oAuth2Attributes
 ) implements UserDetails, OAuth2User {
 
-
-    //일반 로그인 (카카오 로그인 x)
     public static BoardAdminPrincipal of(String username, String password, Set<RoleType> roleTypes, String email, String nickname, String memo) {
-        return of(username, password, roleTypes, email, nickname, memo, Map.of());
-                                                            // null 이랑은 잘 안맞는다고 생각해서 비어있는 Map 생성
+        return BoardAdminPrincipal.of(username, password, roleTypes, email, nickname, memo, Map.of());
     }
-    // 카카오 로그인
-    public static BoardAdminPrincipal of(String username, String password, Set<RoleType> roleTypes, String email, String nickname, String memo, Map<String, Object> oAuth2Attributes) {
 
+    public static BoardAdminPrincipal of(String username, String password, Set<RoleType> roleTypes, String email, String nickname, String memo, Map<String, Object> oAuth2Attributes) {
         return new BoardAdminPrincipal(
                 username,
                 password,
@@ -49,7 +43,7 @@ public record BoardAdminPrincipal(
         );
     }
 
-    public static BoardAdminPrincipal from(UserAccountDto dto) {
+    public static BoardAdminPrincipal from(AdminAccountDto dto) {
         return BoardAdminPrincipal.of(
                 dto.userId(),
                 dto.userPassword(),
@@ -60,8 +54,8 @@ public record BoardAdminPrincipal(
         );
     }
 
-    public UserAccountDto toDto() {
-        return UserAccountDto.of(
+    public AdminAccountDto toDto() {
+        return AdminAccountDto.of(
                 username,
                 password,
                 authorities.stream()
@@ -78,8 +72,6 @@ public record BoardAdminPrincipal(
 
     @Override public String getUsername() { return username; }
     @Override public String getPassword() { return password; }
-
-
     @Override public Collection<? extends GrantedAuthority> getAuthorities() { return authorities; }
 
     @Override public boolean isAccountNonExpired() { return true; }
@@ -87,19 +79,7 @@ public record BoardAdminPrincipal(
     @Override public boolean isCredentialsNonExpired() { return true; }
     @Override public boolean isEnabled() { return true; }
 
-
-    // OAuth2User 를 사용하려면 구현 해야함
-    @Override
-    public Map<String, Object> getAttributes() {
-        return oAuth2Attributes;
-    }
-    @Override
-    public String getName() {
-        return username;
-    }
-    // ----------------------------------------------
-
-
-
+    @Override public Map<String, Object> getAttributes() { return oAuth2Attributes; }
+    @Override public String getName() { return username; }
 
 }

@@ -1,0 +1,16 @@
+package com.example.projectboardadmin.service;
+
+import com.example.projectboardadmin.dto.ArticleDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@RequiredArgsConstructor
+@Service
+public class ArticleManagementService {
+
+    public List<ArticleDto> getArticles() {
+        return List.of();
+    }
+}
