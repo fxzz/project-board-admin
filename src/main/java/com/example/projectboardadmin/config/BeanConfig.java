@@ -12,4 +12,5 @@ public class BeanConfig {
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
     }
+
 }

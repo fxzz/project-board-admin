@@ -2,28 +2,18 @@ package com.example.projectboardadmin.dto.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * 어드민 프로젝트 전용 프로퍼티
+ *
+ * @param board 게시판 관련 프로퍼티
+ */
 @ConfigurationProperties("project")
-public class ProjectProperties {
+public record ProjectProperties(Board board) {
 
-    private Board board;
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
-    }
-
-    public static class Board {
-        private String url;
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-    }
+    /**
+     * 게시판 관련 프로퍼티
+     *
+     * @param url 게시판 서비스 호스트명
+     */
+    public record Board(String url) {}
 }

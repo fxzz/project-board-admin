@@ -1,9 +1,6 @@
 package com.example.projectboardadmin.dto;
 
-
-
 import java.time.LocalDateTime;
-import java.util.Set;
 
 public record UserAccountDto(
         String userId,
